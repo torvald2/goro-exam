@@ -1,13 +1,21 @@
 <template>
-  <div class="flex">
-    <div class="flex-1 p-10 py-5">
-      <!-- <h1 class="text-2xl font-bold">TestContent</h1> -->
-      <div id="paper"></div>
+  <div>
+    <div class="flex">
+      <div class="flex-1 p-10 py-5">
+        <!-- <h1 class="text-2xl font-bold">TestContent</h1> -->
+        <div id="paper"></div>
+      </div>
+      <div class="mt-10 py-10">
+        <select-map />
+        <form-map @sendData="getFormData" v-if="getModeMap == 0" />
+        <solar-form @sendData="getSolarData" v-if="getModeMap == 1" />
+      </div>
     </div>
-    <div class="mt-10 py-10">
-      <select-map />
-      <form-map @sendData="getFormData" v-if="getModeMap == 0" />
-      <solar-form @sendData="getSolarData" v-if="getModeMap == 1" />
+    <div class="flex">
+      <div class="p-10 py-5">
+        <!-- <h1 class="text-2xl font-bold">TestContent</h1> -->
+        <table-data v-bind:data-planets="getPlanets" />
+      </div>
     </div>
   </div>
 </template>
@@ -19,6 +27,7 @@ import ephemeris from "ephemeris";
 import FormMap from "./Form.vue";
 import SolarForm from "./SolarForm.vue";
 import SelectMap from "./SelectMap.vue";
+import TableData from "./TableComponent.vue";
 import { mapGetters, mapActions } from "vuex";
 
 export default {
@@ -27,10 +36,16 @@ export default {
     SolarForm,
     FormMap,
     SelectMap,
+    TableData,
   },
-  computed: mapGetters(["getPlanets", "getCuspsDegrees", "getModeMap"]),
+  computed: mapGetters([
+    "getPlanets",
+    "getCuspsDegrees",
+    "getModeMap",
+    "getHouses",
+  ]),
   methods: {
-    ...mapActions(["setPlanetsDegrees", "setCuspsDegrees"]),
+    ...mapActions(["setPlanetsDegrees", "setCuspsDegrees", "setHousesDegrees"]),
     getFormData: function (data) {
       // var date = new Date();
 
@@ -56,6 +71,7 @@ export default {
 
       this.setPlanetsDegrees(this.horoscope);
       this.setCuspsDegrees(this.horoscope);
+      this.setHousesDegrees(this.horoscope);
 
       var newData = {
         planets: this.getPlanets,
@@ -98,6 +114,7 @@ export default {
 
       this.setPlanetsDegrees(this.horoscope);
       this.setCuspsDegrees(this.horoscope);
+      this.setHousesDegrees(this.horoscope);
 
       var solarDate = new Date(
         data.solarYear,
@@ -129,7 +146,7 @@ export default {
         console.log(Math.abs(sunDegreesSolar - sunDegreesHoroscope));
         while (Math.abs(sunDegreesSolar - sunDegreesHoroscope) > 0.001) {
           // Вычислить соляр спустя 1 секунду вперед
-          solarDate = new Date((Math.floor(solarDate / 1000) + 100)*1000);
+          solarDate = new Date((Math.floor(solarDate / 1000) + 100) * 1000);
           console.log(solarDate);
           ephemerisPlanets = ephemeris.getAllPlanets(solarDate, 59.97, 30.28);
           sunDegreesSolar = ephemerisPlanets.observed.sun.apparentLongitudeDd;
@@ -149,18 +166,10 @@ export default {
       }
       console.log(solarDate);
       console.log(sunDegreesSolar);
-      console.log(sunDegreesHoroscope)
+      console.log(sunDegreesHoroscope);
       // ИЛИ
       // Узнать изменение градуса солнца за одну секунду
       // и прибавить/вычесть столько секунд, чтобы получить соляр
-
-      // while (
-      //   this.solarHoroscope.CelestialBodies.Sun.ChartPosition.Ecliptic
-      //     .DecimalDegrees <
-      //   this.horoscope.CelestialBodies.Sun.ChartPosition.Ecliptic.DecimalDegrees
-      // ) {
-      //   // TODO: прибавлять по часу и заново вычислять соляр
-      // }
     },
   },
   data() {
@@ -194,21 +203,23 @@ export default {
 
     this.setPlanetsDegrees(this.horoscope);
     this.setCuspsDegrees(this.horoscope);
+    this.setHousesDegrees(this.horoscope);
 
     var data = {
       planets: this.getPlanets,
       cusps: this.getCuspsDegrees,
     };
-
+    // var houses = this.getHouses;
+    console.log(this.horoscope)
     var chart = new astrology.Chart("paper", 600, 600).radix(data);
 
     // Aspect calculation
     // default is planet to planet, but it is possible add some important points:
-    // radix.addPointsOfInterest({
-    //   As: [data.cusps[0]],
-    //   Ic: [data.cusps[3]],
-    //   Ds: [data.cusps[6]],
-    //   Mc: [data.cusps[9]],
+    // chart.addPointsOfInterest({
+    //   As: [houses[1][0]],
+    //   Ic: [houses[4][0]],
+    //   Ds: [houses[7][0]],
+    //   Mc: [houses[10][0]],
     // });
     chart.aspects();
   },

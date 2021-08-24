@@ -1,9 +1,16 @@
 export default {
+    state: {
+        isLogined: false,
+        cuspsDegrees: [],
+        planets: {},
+        houses: {},
+        modeMap: 0,
+    },
     actions: {
         async setPlanetsDegrees(context, horoscope) {
             var planets = {}
             horoscope.CelestialBodies.all.forEach((element) => {
-                planets[element.label] = [element.ChartPosition.Ecliptic.DecimalDegrees]
+                planets[element.label] = [element.ChartPosition.Ecliptic.DecimalDegrees, element.ChartPosition.Ecliptic.ArcDegreesFormatted30]
             });
             context.commit('updatePlanets', planets);
         },
@@ -16,6 +23,13 @@ export default {
         },
         async setModeMap(context, mode) {
             context.commit('updateModeMap', mode);
+        },
+        async setHousesDegrees(context, horoscope) {
+            var houses = {}
+            horoscope.Houses.forEach((element) => {
+                houses[element.id] = [element.ChartPosition.EndPosition.Ecliptic.DecimalDegrees, element.ChartPosition.EndPosition.Ecliptic.ArcDegreesFormatted30] 
+            })
+            context.commit('updateHouses', houses);
         }
     },
     mutations: {
@@ -27,13 +41,10 @@ export default {
         },
         updateModeMap(state, modeMap) {
             state.modeMap = modeMap;
+        },
+        updateHouses(state, houses) {
+            state.houses = houses;
         }
-    },
-    state: {
-        isLogined: false,
-        cuspsDegrees: [],
-        planets: {},
-        modeMap: 0,
     },
     getters: {
         checkLogin(state) {
@@ -47,6 +58,9 @@ export default {
         },
         getModeMap(state) {
             return state.modeMap
+        },
+        getHouses(state) {
+            return state.houses
         }
     },
 }
