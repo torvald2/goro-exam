@@ -5,6 +5,7 @@ export default {
         planets: {},
         houses: {},
         modeMap: 0,
+        solarData: {}
     },
     actions: {
         async setPlanetsDegrees(context, horoscope) {
@@ -27,9 +28,12 @@ export default {
         async setHousesDegrees(context, horoscope) {
             var houses = {}
             horoscope.Houses.forEach((element) => {
-                houses[element.id] = [element.ChartPosition.EndPosition.Ecliptic.DecimalDegrees, element.ChartPosition.EndPosition.Ecliptic.ArcDegreesFormatted30] 
+                houses[element.id] = [element.ChartPosition.StartPosition.Ecliptic.DecimalDegrees, element.ChartPosition.StartPosition.Ecliptic.ArcDegreesFormatted30]
             })
             context.commit('updateHouses', houses);
+        },
+        async setSolarData(context, data) {
+            context.commit('updateSolarData', data);
         }
     },
     mutations: {
@@ -44,6 +48,9 @@ export default {
         },
         updateHouses(state, houses) {
             state.houses = houses;
+        },
+        updateSolarData(state, solarData) {
+            state.solarData = solarData;
         }
     },
     getters: {
@@ -61,6 +68,9 @@ export default {
         },
         getHouses(state) {
             return state.houses
+        },
+        getSolarData(state) {
+            return state.solarData
         }
     },
 }

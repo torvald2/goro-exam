@@ -39,10 +39,10 @@
               </tr>
             </thead>
             <tbody class="bg-white divide-y divide-gray-200">
-              <tr v-for="row in dataPlanets" :key="row.planet">
+              <tr v-for="row in dataHouses" :key="row.house">
                 <td class="px-6 py-4 whitespace-nowrap">
                   <div class="text-sm font-medium text-gray-900">
-                    {{ row.planet }}
+                    {{ row.house }}
                   </div>
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap">
@@ -65,26 +65,26 @@ export default {
   data() {
     return {
       // Перечисление планет
-      dataPlanets: [],
+      dataHouses: [],
       // Перечисление домов
     };
   },
-  computed: mapGetters(["getPlanets"]),
+  computed: mapGetters(["getHouses"]),
   methods: {
-    updateTable() {
-      for (var planet in this.getPlanets) {
-        this.dataPlanets.push({
-          planet: planet,
-          degrees: this.getPlanets[planet][1],
+    updateTable: function () {
+      for (var house in this.getHouses) {
+        this.dataHouses.push({
+          house: house,
+          degrees: this.getHouses[house][1],
         });
       }
     },
   },
   mounted() {
-    for (var planet in this.getPlanets) {
-      this.dataPlanets.push({
-        planet: planet,
-        degrees: this.getPlanets[planet][1],
+    for (var house in this.getHouses) {
+      this.dataHouses.push({
+        house: house,
+        degrees: this.getHouses[house][1],
       });
     }
   },
