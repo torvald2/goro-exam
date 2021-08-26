@@ -112,7 +112,7 @@
                     >Число</label
                   >
                   <input
-                    v-model="dateDay"
+                    v-model="date"
                     type="text"
                     name="date-day"
                     id="date-day"
@@ -139,7 +139,7 @@
                     >Месяц</label
                   >
                   <input
-                    v-model="dateMonth"
+                    v-model="month"
                     type="text"
                     name="date-month"
                     id="date-month"
@@ -166,7 +166,7 @@
                     >Год</label
                   >
                   <input
-                    v-model="dateYear"
+                    v-model="year"
                     type="text"
                     name="date-year"
                     id="date-year"
@@ -247,13 +247,13 @@ export default {
   data() {
     return {
       name: null,
-      dateYear: null,
-      dateMonth: null,
-      dateDay: null,
+      year: null,
+      month: null,
+      date: null,
       city: null,
       hour: null,
       minute: null,
-      calcYear: [2021, 2020],
+      calcYear: [2022, 2021, 2020],
       solarYear: null,
     };
   },
@@ -265,9 +265,9 @@ export default {
       // alert(this.name);
       var data = {
         name: this.name,
-        dateYear: this.dateYear,
-        dateMonth: this.dateMonth,
-        dateDay: this.dateDay,
+        year: this.year,
+        month: this.month,
+        date: this.date,
         city: this.city,
         hour: this.hour,
         minute: this.minute,

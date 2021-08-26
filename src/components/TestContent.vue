@@ -69,9 +69,9 @@ export default {
     getHoroscope: function (data) {
       var horoscope = new Horoscope({
         origin: new Origin({
-          year: data.dateYear,
-          month: data.dateMonth - 1, // 0 = January, 11 = December!
-          date: data.dateDay,
+          year: data.year,
+          month: data.month - 1, // 0 = January, 11 = December!
+          date: data.date,
           hour: data.hour,
           minute: data.minute,
           // СПб 59.97770755245601, 30.289192765690085
@@ -90,8 +90,6 @@ export default {
       return horoscope;
     },
     getFormData: function (data) {
-      // var date = new Date();
-
       this.horoscope = this.getHoroscope(data);
 
       this.setPlanetsDegrees(this.horoscope);
@@ -105,8 +103,6 @@ export default {
       document.getElementById("paper").innerHTML = "";
       var radix = new astrology.Chart("paper", 600, 600).radix(newData);
 
-      // Aspect calculation
-      // default is planet to planet, but it is possible add some important points:
       radix.addPointsOfInterest({
         As: [newData.cusps[0]],
         Ic: [newData.cusps[3]],
@@ -125,49 +121,17 @@ export default {
 
       var solarDate = new Date(
         data.solarYear,
-        data.dateMonth - 1,
-        data.dateDay,
+        data.month - 1,
+        data.date,
         data.hour,
         data.minute
       );
       var ephemerisPlanets = ephemeris.getAllPlanets(solarDate, 59.97, 30.28);
 
-      // console.log(this.horoscope);
       var sunDegreesSolar = ephemerisPlanets.observed.sun.apparentLongitudeDd;
       const sunDegreesHoroscope =
         this.horoscope.CelestialBodies.sun.ChartPosition.Ecliptic
           .DecimalDegrees;
-      // console.log(sunDegrees);
-      // console.log(
-      //   this.horoscope.CelestialBodies.sun.ChartPosition.Ecliptic.DecimalDegrees
-      // );
-      // Получить UNIX тайм
-
-      // var is_ready = false;
-      // Если координаты соляра меньше натала
-      // то прибавлять по секунде пока погрешность не будет максимально низкая
-      // if (sunDegreesSolar < sunDegreesHoroscope && !is_ready && is_ready) {
-      //   while (Math.abs(sunDegreesSolar - sunDegreesHoroscope) >= 0.001) {
-      //     // Вычислить соляр спустя 1 секунду вперед
-
-      //     solarDate = new Date((Math.floor(solarDate / 1000) + 100) * 1000);
-      //     ephemerisPlanets = ephemeris.getAllPlanets(solarDate, 59.97, 30.28);
-      //     sunDegreesSolar = ephemerisPlanets.observed.sun.apparentLongitudeDd;
-      //   }
-      //   is_ready = true;
-      // }
-      // Если координаты соляра больше натала
-      // то вычитать по секунде пока погрешность не будет максимально низкая
-      // if (sunDegreesSolar > sunDegreesHoroscope && !is_ready && is_ready) {
-      //   while (Math.abs(sunDegreesSolar - sunDegreesHoroscope) >= 0.001) {
-      //     // Вычислить соляр спустя 1 секунду назад
-
-      //     solarDate = new Date((Math.floor(solarDate / 1000) - 100) * 1000);
-      //     ephemerisPlanets = ephemeris.getAllPlanets(solarDate, 59.97, 30.28);
-      //     sunDegreesSolar = ephemerisPlanets.observed.sun.apparentLongitudeDd;
-      //   }
-      //   is_ready = true;
-      // }
 
       // ИЛИ
       // Узнать изменение градуса солнца за одну секунду
@@ -202,24 +166,28 @@ export default {
         );
       }
 
+    console.log(solarDate)
+
       var dataRadix = {
         planets: this.getPlanetsHoroscope(this.horoscope),
         cusps: this.getCuspsHoroscope(this.horoscope),
       };
 
       var solarData = {
-        year: data.solarYear,
-        month: data.dateMonth - 1, // 0 = January, 11 = December!
-        date: data.dateDay,
+        year: solarDate.getFullYear(),
+        month: solarDate.getMonth()+1, // 0 = January, 11 = December!
+        date: solarDate.getDate(),
         hour: solarDate.getHours(),
         minute: solarDate.getMinutes(),
       };
+      console.log(solarData);
       var solar = this.getHoroscope(solarData);
       var dataTransit = {
         planets: this.getPlanetsHoroscope(solar),
         cusps: this.getCuspsHoroscope(solar),
       };
-
+      console.log(dataRadix)
+      console.log(dataTransit)
       document.getElementById("paper").innerHTML = "";
       var chart = new astrology.Chart("paper", 800, 800, {
         MARGIN: 100,
