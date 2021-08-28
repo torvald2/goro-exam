@@ -38,8 +38,8 @@
                 </th>
               </tr>
             </thead>
-            <tbody class="bg-white divide-y divide-gray-200">
-              <tr v-for="row in dataPlanets" :key="row.planet">
+            <tbody id="planets" class="bg-white divide-y divide-gray-200">
+              <tr class="fedya" v-for="row in dataPlanets" :key="row.planet">
                 <td class="px-6 py-4 whitespace-nowrap">
                   <div class="text-sm font-medium text-gray-900">
                     {{ row.planet }}
@@ -61,7 +61,6 @@
 import { mapGetters } from "vuex";
 
 export default {
-  // props: ['dataPlanets'],
   data() {
     return {
       // Перечисление планет
@@ -71,13 +70,18 @@ export default {
   },
   computed: mapGetters(["getPlanets"]),
   methods: {
-    updateTable() {
-      for (var planet in this.getPlanets) {
-        this.dataPlanets.push({
-          planet: planet,
-          degrees: this.getPlanets[planet][1],
-        });
-      }
+    updateTable: function () {
+      this.$forceUpdate();
+      // this.dataPlanets = [];
+
+      // for (var planet in this.getPlanets) {
+      //   this.dataPlanets.push({
+      //     planet: planet,
+      //     degrees: this.getPlanets[planet][1],
+      //   });
+      // }
+      // document.getElementById("planets").innerHTML = "";
+      // console.log(this.dataPlanets)
     },
   },
   mounted() {

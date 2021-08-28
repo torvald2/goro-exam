@@ -7,14 +7,26 @@
       </div>
       <div class="mt-10 py-10">
         <select-map />
-        <form-map @sendData="getFormData" v-if="getModeMap == 0" />
+        <form-map
+          @sendData="getFormData"
+          v-if="getModeMap == 0"
+          ref="formMapComponent"
+        />
         <solar-form @sendData="getSolarData" v-if="getModeMap == 1" />
       </div>
     </div>
     <div class="flex p-10 py-5">
       <!-- <h1 class="text-2xl font-bold">TestContent</h1> -->
-      <table-data v-bind:data-planets="getPlanets" />
-      <houses-table class="px-4" />
+      <table-data
+        v-bind:data-planets="getPlanets"
+        ref="tableDataComponent"
+        :key="componentKey"
+      />
+      <houses-table
+        class="px-4"
+        ref="tableHousesComponent"
+        :key="componentKey"
+      />
     </div>
   </div>
 </template>
@@ -78,7 +90,7 @@ export default {
           latitude: 59.97,
           longitude: 30.28,
         }),
-        houseSystem: "whole-sign",
+        houseSystem: "placidus",
         zodiac: "tropical",
         aspectPoints: ["bodies", "points", "angles"],
         aspectWithPoints: ["bodies", "points", "angles"],
@@ -90,11 +102,13 @@ export default {
       return horoscope;
     },
     getFormData: function (data) {
+      // FormMap.check();
       this.horoscope = this.getHoroscope(data);
 
       this.setPlanetsDegrees(this.horoscope);
       this.setCuspsDegrees(this.horoscope);
       this.setHousesDegrees(this.horoscope);
+      console.log(this.getHouses);
 
       var newData = {
         planets: this.getPlanets,
@@ -111,6 +125,8 @@ export default {
       });
 
       radix.aspects();
+
+      this.componentKey += 1;
     },
     getSolarData: function (data) {
       this.horoscope = this.getHoroscope(data);
@@ -166,7 +182,7 @@ export default {
         );
       }
 
-    console.log(solarDate)
+      console.log(solarDate);
 
       var dataRadix = {
         planets: this.getPlanetsHoroscope(this.horoscope),
@@ -175,19 +191,18 @@ export default {
 
       var solarData = {
         year: solarDate.getFullYear(),
-        month: solarDate.getMonth()+1, // 0 = January, 11 = December!
+        month: solarDate.getMonth() + 1, // 0 = January, 11 = December!
         date: solarDate.getDate(),
         hour: solarDate.getHours(),
         minute: solarDate.getMinutes(),
       };
-      console.log(solarData);
+
       var solar = this.getHoroscope(solarData);
       var dataTransit = {
         planets: this.getPlanetsHoroscope(solar),
         cusps: this.getCuspsHoroscope(solar),
       };
-      console.log(dataRadix)
-      console.log(dataTransit)
+
       document.getElementById("paper").innerHTML = "";
       var chart = new astrology.Chart("paper", 800, 800, {
         MARGIN: 100,
@@ -206,12 +221,14 @@ export default {
 
       var transit = radix.transit(dataTransit);
       transit.aspects();
+      this.componentKey += 1;
     },
   },
   data() {
     return {
       horoscope: null,
       solar: null,
+      componentKey: 0,
     };
   },
   mounted() {

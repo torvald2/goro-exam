@@ -7,7 +7,9 @@
             <div class="px-4 py-5 bg-gray-100 sm:p-6">
               <div class="grid grid-cols-6 gap-6">
                 <div class="col-span-6 sm:col-span-3">
-                  <label for="name" class="block text-gray-700 text-sm font-bold mb-2"
+                  <label
+                    for="name"
+                    class="block text-gray-700 text-sm font-bold mb-2"
                     >Имя</label
                   >
                   <input
@@ -33,7 +35,9 @@
                 </div>
 
                 <div class="col-span-6">
-                  <label for="city" class="block text-gray-700 text-sm font-bold mb-2"
+                  <label
+                    for="city"
+                    class="block text-gray-700 text-sm font-bold mb-2"
                     >Город</label
                   >
                   <input
@@ -59,7 +63,9 @@
                 </div>
 
                 <div class="col-span-6 sm:col-span-3 lg:col-span-3">
-                  <label for="hour" class="block text-gray-700 text-sm font-bold mb-2"
+                  <label
+                    for="hour"
+                    class="block text-gray-700 text-sm font-bold mb-2"
                     >Час</label
                   >
                   <input
@@ -85,7 +91,9 @@
                 </div>
 
                 <div class="col-span-6 sm:col-span-3 lg:col-span-2">
-                  <label for="minute" class="block text-gray-700 text-sm font-bold mb-2"
+                  <label
+                    for="minute"
+                    class="block text-gray-700 text-sm font-bold mb-2"
                     >Минуты</label
                   >
                   <input
@@ -111,7 +119,9 @@
                 </div>
 
                 <div class="col-span-6 sm:col-span-6 lg:col-span-2">
-                  <label for="date-day" class="block text-gray-700 text-sm font-bold mb-2"
+                  <label
+                    for="date-day"
+                    class="block text-gray-700 text-sm font-bold mb-2"
                     >Число</label
                   >
                   <input
@@ -163,7 +173,9 @@
                 </div>
 
                 <div class="col-span-6 sm:col-span-3 lg:col-span-2">
-                  <label for="date-year" class="block text-gray-700 text-sm font-bold mb-2"
+                  <label
+                    for="date-year"
+                    class="block text-gray-700 text-sm font-bold mb-2"
                     >Год</label
                   >
                   <input

@@ -38,7 +38,7 @@
                 </th>
               </tr>
             </thead>
-            <tbody class="bg-white divide-y divide-gray-200">
+            <tbody id="houses" class="bg-white divide-y divide-gray-200">
               <tr v-for="row in dataHouses" :key="row.house">
                 <td class="px-6 py-4 whitespace-nowrap">
                   <div class="text-sm font-medium text-gray-900">
@@ -46,7 +46,9 @@
                   </div>
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap">
-                  <div class="text-sm text-gray-900">{{ row.degrees }}</div>
+                  <div class="text-sm text-gray-900">
+                    {{ row.degrees }}
+                  </div>
                 </td>
               </tr>
             </tbody>
@@ -72,12 +74,7 @@ export default {
   computed: mapGetters(["getHouses"]),
   methods: {
     updateTable: function () {
-      for (var house in this.getHouses) {
-        this.dataHouses.push({
-          house: house,
-          degrees: this.getHouses[house][1],
-        });
-      }
+      this.$forceUpdate();
     },
   },
   mounted() {
