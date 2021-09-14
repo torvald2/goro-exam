@@ -26,7 +26,7 @@
                       focus:shadow-outline
                     "
                     v-model="modeMap"
-                    :options="['Обычная карта', 'Соляр']"
+                    :options="['Обычная карта', 'Соляр', 'Дирекции', 'Транзиты']"
                     variant="Обычная карта"
                     @change="setData"
                   ></t-select>

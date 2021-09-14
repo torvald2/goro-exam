@@ -5,7 +5,7 @@
         <!-- <h1 class="text-2xl font-bold">TestContent</h1> -->
         <div id="paper"></div>
       </div>
-      <div class="mt-10 py-10">
+      <div class="mt-10 py-10" v-if="!hidden">
         <select-map />
         <form-map
           @sendData="getFormData"
@@ -15,7 +15,23 @@
         <solar-form @sendData="getSolarData" v-if="getModeMap == 1" />
       </div>
     </div>
-    <div class="flex p-10 py-5">
+    <div class="data-planet p-10 py-5">
+      <div
+        class="data-title"
+        style="color: #4f4f4f; border-bottom: 1px solid #3d3e40"
+      >
+        <span>ПЛАНЕТЫ</span>
+      </div>
+    </div>
+    <div class="data-houses p-10 py-5">
+      <div
+        class="data-title"
+        style="color: #4f4f4f; border-bottom: 1px solid #3d3e40"
+      >
+        <span>ДОМА</span>
+      </div>
+    </div>
+    <div class="flex p-10 py-5" v-if="!hidden">
       <!-- <h1 class="text-2xl font-bold">TestContent</h1> -->
       <table-data
         v-bind:data-planets="getPlanets"
@@ -108,8 +124,7 @@ export default {
       this.setPlanetsDegrees(this.horoscope);
       this.setCuspsDegrees(this.horoscope);
       this.setHousesDegrees(this.horoscope);
-      console.log(this.getHouses);
-
+      
       var newData = {
         planets: this.getPlanets,
         cusps: this.getCuspsDegrees,
@@ -229,6 +244,7 @@ export default {
       horoscope: null,
       solar: null,
       componentKey: 0,
+      hidden: true,
     };
   },
   mounted() {

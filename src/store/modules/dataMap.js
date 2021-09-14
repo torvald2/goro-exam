@@ -1,11 +1,14 @@
 export default {
     state: {
         isLogined: false,
+        name: "",
         cuspsDegrees: [],
         planets: {},
         houses: {},
         modeMap: 0,
-        solarData: {}
+        solarData: {},
+        birthDate: null,
+        city: ""
     },
     actions: {
         async setPlanetsDegrees(context, horoscope) {
@@ -34,6 +37,12 @@ export default {
         },
         async setSolarData(context, data) {
             context.commit('updateSolarData', data);
+        },
+        async setName(context, name) {
+            context.commit('updateName', name)
+        },
+        async setBirthDate(context, birthDate) {
+            context.commit('updateBirthDate', birthDate)
         }
     },
     mutations: {
@@ -51,6 +60,12 @@ export default {
         },
         updateSolarData(state, solarData) {
             state.solarData = solarData;
+        },
+        updateName(state, name) {
+            state.name = name;
+        },
+        updateBirthDate(state, birthDate) {
+            state.birthDate = birthDate;
         }
     },
     getters: {
@@ -71,6 +86,12 @@ export default {
         },
         getSolarData(state) {
             return state.solarData
+        },
+        getName(state) {
+            return state.name
+        },
+        getBirthDate(state) {
+            return state.birthDate
         }
     },
 }

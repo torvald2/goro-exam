@@ -45,7 +45,7 @@
                     v-model="city"
                     name="city"
                     id="city"
-                    :options="['Обычная карта', 'Соляр']"
+                    :options="['Санкт-Петербург']"
                   ></t-select>
                 </div>
 

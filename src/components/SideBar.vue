@@ -1,6 +1,6 @@
 <template>
   <div
-    class="bg-gradient-to-b from-blue-500 to-blue-700 w-48 text-white px-2 py-8"
+    class="bg-gradient-to-b from-indigo-400 to-indigo-600 w-44 text-white px-2 py-8"
   >
     <!-- Sidebar -->
     <nav class="flex flex-col justify-between min-h-full">
